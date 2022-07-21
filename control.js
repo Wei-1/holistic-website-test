@@ -1,4 +1,3 @@
-const videoElement = document.createElement('video');
 const canvasElement = document.getElementById('theCanvas');
 const canvasCtx = canvasElement.getContext('2d');
 
@@ -41,8 +40,8 @@ function connect(p1, p2){
 
 const FACE_POINTS = {
     "head": [127, 356, 10, 152, 168],
-    "righteye": [33, 133, 159, 145],
-    "lefteye": [362, 263, 386, 374],
+    "righteye": [33, 133, 159, 145, 468],
+    "lefteye": [362, 263, 386, 374, 473],
     "mouth": [78, 308, 13, 14],
     "rightbrow": [105, 107],
     "leftbrow": [336, 334]
@@ -51,7 +50,12 @@ const POSE_CONNECTIONS = [[0,1],[1,2],[2,3],[3,7],[0,4],[4,5],[5,6],[6,8],[9,10]
 const HAND_CONNECTIONS = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[0,17],[17,18],[18,19],[19,20]];
 const POSE_LANDMARKS = {NOSE:0,LEFT_EYE_INNER:1,LEFT_EYE:2,LEFT_EYE_OUTER:3,RIGHT_EYE_INNER:4,RIGHT_EYE:5,RIGHT_EYE_OUTER:6,LEFT_EAR:7,RIGHT_EAR:8,P:9,V:10,LEFT_SHOULDER:11,RIGHT_SHOULDER:12,LEFT_ELBOW:13,RIGHT_ELBOW:14,LEFT_WRIST:15,RIGHT_WRIST:16,LEFT_PINKY:17,RIGHT_PINKY:18,LEFT_INDEX:19,RIGHT_INDEX:20,LEFT_THUMB:21,RIGHT_THUMB:22,LEFT_HIP:23,RIGHT_HIP:24,O:25,U:26,L:27,R:28,N:29,T:30,M:31,S:32};
 
+var firstTime = true;
 function onResults(results) {
+    if(firstTime){
+        firstTime = false;
+        console.log(results);
+    }
 
     removeLandmarks(results);
 
@@ -120,23 +124,26 @@ function onResults(results) {
 }
 
 const holistic = new Holistic({locateFile: (file) => {
-    if(file.endsWith(".js")){
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.1/${file}`;
-    }else{
+    if(file.endsWith(".data") || file.endsWith(".tflite")){
         return `data/${file}`;
+    }else{
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.5/${file}`;
     }
 }});
 holistic.setOptions({
+    cameraOn: true,
     modelComplexity: 0,
+    useCpuInference: false,
     smoothLandmarks: false,
     enableSegmentation: false,
     smoothSegmentation: false,
-    refineFaceLandmarks: false,
+    refineFaceLandmarks: true,
     minDetectionConfidence: 0.5,
-    minTrackingConfidence: 0.5
+    minTrackingConfidence: 0.55,
 });
 holistic.onResults(onResults);
 
+const videoElement = document.createElement('video');
 videoElement.playsinline = "playsinline";
 videoElement.autoplay = "autoplay";
 function startCamera(cb){
