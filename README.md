@@ -1,6 +1,6 @@
 # Holistic Website Test
 
-This project uses TF.js to calculate:
+This project uses mediapipe holistic to calculate:
  - Facial landmarks
  - Pose
  - Hand gestures
@@ -11,15 +11,17 @@ This project uses TF.js to calculate:
 
 There are many Demos out there that are too complex (including the official example). This repository is the minimum setup that I developed that contains a reasonable amount of component.
 
-There are 7 files in this repo:
+There are 9 files in this repo:
  - README.md (this file)
  - index.html (include the dependencies and JS files)
  - sample.png (DEMO image)
  - control.js (main JS file)
- - Data Files x 3 (Can be loaded from cdn.jsdelivr.net)
-   - data/holistic.binarypb
-   - data/holistic_solution_packed_assets.data
-   - data/holistic_solution_simd_wasm_bin.wasm
+ - worker.js (the file to run holictis in a different thread)
+ - holistic.js (the edited holistic file)
+ - Data Files x 3
+   - pose_landmark_lite.tflite
+   - holistic_solution_packed_assets.data
+   - holistic_solution_simd_wasm_bin.wasm
 
 We have the Data Files in the repository to speed up the page initialization.
 
@@ -34,5 +36,7 @@ If you want to try this repo by yourself, you can clone the project and use [htt
 
 ### Changelog
 
- - 2021-07-21
+ - 2022-07-21
    - Initiation
+ - 2022-09-30
+   - Test web worker
