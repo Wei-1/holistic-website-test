@@ -1,11 +1,11 @@
 let ttttt = new Date().getTime();
-self.importScripts("holistic.js?ttttt="+ttttt);
+self.importScripts("holistic.js");
 
 let hModel = null;
 let hModelInit = false;
 async function init(){
     hModel = new Holistic({locateFile: (file) => {
-        if(file.endsWith(".data") || file.endsWith(".tflite")){
+        if(file.endsWith(".tflite")){
             return file;
         }else{
             return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.5/${file}`;

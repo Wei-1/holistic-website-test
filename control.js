@@ -92,7 +92,7 @@ function onResults(results){
     removeLandmarks(results);
     theResults = results;
 }
-let worker = new Worker("worker.js");
+let worker = new Worker("holistic/worker.js");
 worker.onmessage = function(e){
     if(e.data){
         onResults(e.data);
