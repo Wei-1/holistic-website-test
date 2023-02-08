@@ -127,7 +127,7 @@ const holistic = new Holistic({locateFile: (file) => {
     if(file.endsWith(".data") || file.endsWith(".tflite")){
         return `data/${file}`;
     }else{
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.5/${file}`;
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.5.1635989137/${file}`;
     }
 }});
 holistic.setOptions({
